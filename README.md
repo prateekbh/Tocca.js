@@ -40,10 +40,15 @@ Once you have included Tocca.js you will be able to catch all the new events:
 elm.addEventListener('tap',function(e){});
 elm.addEventListener('dbltap',function(e){});
 elm.addEventListener('longtap',function(e){});
+elm.addEventListener('longpress',function(e){});
 elm.addEventListener('swipeleft',function(e){});
 elm.addEventListener('swiperight',function(e){});
 elm.addEventListener('swipeup',function(e){});
 elm.addEventListener('swipedown',function(e){});
+elm.addEventListener('panleft',function(e){});
+elm.addEventListener('panright',function(e){});
+elm.addEventListener('panup',function(e){});
+elm.addEventListener('pandown',function(e){});
 ```
 
 It works with jQuery as well:
@@ -51,10 +56,15 @@ It works with jQuery as well:
 $(elm).on('tap',function(e,data){});
 $(elm).on('dbltap',function(e,data){});
 $(elm).on('longtap',function(e,data){});
+$(elm).on('longpress',function(e,data){});
 $(elm).on('swipeleft',function(e,data){});
 $(elm).on('swiperight',function(e,data){});
 $(elm).on('swipeup',function(e,data){});
 $(elm).on('swipedown',function(e,data){});
+$(elm).on('pressleft',function(e,data){});
+$(elm).on('pressright',function(e,data){});
+$(elm).on('pressup',function(e,data){});
+$(elm).on('pressdown',function(e,data){});
 ```
 
 Tocca.js supports also the inline events!
@@ -62,10 +72,15 @@ Tocca.js supports also the inline events!
 <div ontap="function(e){})"></div>
 <div ondbltap="function(e){})"></div>
 <div onlongtap="function(e){})"></div>
+<div onlongpress="function(e){})"></div>
 <div onswipeleft="function(e){})"></div>
 <div onswiperight="function(e){})"></div>
 <div onswipeup="function(e){})"></div>
 <div onswipedown="function(e){})"></div>
+<div onpanleft="function(e){})"></div>
+<div onpanright="function(e){})"></div>
+<div onpanup="function(e){})"></div>
+<div onpandown="function(e){})"></div>
 ```
 
 ## API and Examples
