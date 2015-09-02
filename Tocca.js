@@ -1,6 +1,6 @@
 /**
  *
- * Version: 0.1.6
+ * Version: 0.1.8
  * Author: Gianluca Guarini
  * Contact: gianluca.guarini@gmail.com
  * Website: http://www.gianlucaguarini.com/
@@ -99,6 +99,11 @@
 
       timestamp = getTimestamp();
       tapNum++;
+
+      longPressTimer=setTimeout(function() {
+          sendEvent(e.target, "longpress", e);
+      }, longpressThreshold);
+
       // we will use these variables on the touchend events
     },
     onTouchEnd = function(e) {
@@ -109,6 +114,7 @@
 
       // clear the previous timer in case it was set
       clearTimeout(tapTimer);
+      clearTimeout(longPressTimer);
 
       if (deltaX <= -swipeThreshold)
         eventsArr.push('swiperight');
@@ -123,6 +129,7 @@
         eventsArr.push('swipeup');
 
       if (eventsArr.length) {
+        tapNum = 0;
         for (var i = 0; i < eventsArr.length; i++) {
           var eventName = eventsArr[i];
           sendEvent(e.target, eventName, e, {
@@ -164,15 +171,55 @@
       var pointer = getPointerEvent(e);
       currX = pointer.pageX;
       currY = pointer.pageY;
+
+      if(tapNum>0){
+        var eventsArr = [],
+          deltaY = cachedY - currY,
+          deltaX = cachedX - currX;
+
+        if (deltaX <= -swipeThreshold)
+          sendEvent(e.target,'panright', e,{
+            distance: {
+              x: Math.abs(deltaX),
+              y: Math.abs(deltaY)
+            }
+          });
+
+        if (deltaX >= swipeThreshold)
+          sendEvent(e.target,'panleft', e,{
+            distance: {
+              x: Math.abs(deltaX),
+              y: Math.abs(deltaY)
+            }
+          });
+
+        if (deltaY <= -swipeThreshold)
+          sendEvent(e.target,'pandown', e,{
+            distance: {
+              x: Math.abs(deltaX),
+              y: Math.abs(deltaY)
+            }
+          });
+
+        if (deltaY >= swipeThreshold)
+          sendEvent(e.target,'panup', e,{
+            distance: {
+              x: Math.abs(deltaX),
+              y: Math.abs(deltaY)
+            }
+          });
+
+      }
     },
     swipeThreshold = win.SWIPE_THRESHOLD || 100,
     tapThreshold = win.TAP_THRESHOLD || 150, // range of time where a tap event could be detected
     dbltapThreshold = win.DBL_TAP_THRESHOLD || 200, // delay needed to detect a double tap
     longtapThreshold = win.LONG_TAP_THRESHOLD || 1000, // delay needed to detect a long tap
+    longpressThreshold = win.LONG_PRESS_THRESHOLD || 1000, // delay needed to detect a long tap
     tapPrecision = win.TAP_PRECISION / 2 || 60 / 2, // touch events boundaries ( 60px by default )
     justTouchEvents = win.JUST_ON_TOUCH_DEVICES || isTouch,
     tapNum = 0,
-    currX, currY, cachedX, cachedY, tapTimer, timestamp, target;
+    currX, currY, cachedX, cachedY, tapTimer, longPressTimer, timestamp, target;
 
   //setting the events listeners
   setListener(doc, touchevents.touchstart + (justTouchEvents ? '' : ' mousedown'), onTouchStart);

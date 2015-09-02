@@ -49,10 +49,15 @@ var $ = document.querySelector.bind(document),
 test.addEventListener('tap',updateHtml);
 test.addEventListener('dbltap',updateHtml);
 test.addEventListener('longtap',updateHtml);
+test.addEventListener('longpress',updateHtml);
 test.addEventListener('swipeup',updateHtml);
 test.addEventListener('swipedown',updateHtml);
 test.addEventListener('swipeleft',updateHtml);
 test.addEventListener('swiperight',updateHtml);
+test.addEventListener('panup',updateHtml);
+test.addEventListener('pandown',updateHtml);
+test.addEventListener('panleft',updateHtml);
+test.addEventListener('panright',updateHtml);
 test.addEventListener('touchmove',preventDefault);
 test.addEventListener('touchstart',preventDefault);
 test.addEventListener('touchend',preventDefault);
